@@ -59,7 +59,7 @@ func NewChannelStats(c *Channel, clients []ClientStats) ChannelStats {
 		Clients:       clients,                             // gauge
 		Paused:        c.IsPaused(),                        // gauge (integer: {0,1})
 
-		E2eProcessingLatency: c.e2eProcessingLatencyStream.Result(),
+		E2eProcessingLatency: c.e2eProcessingLatencyStream.Result(),  // histogram
 	}
 }
 
