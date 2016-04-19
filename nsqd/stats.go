@@ -48,16 +48,16 @@ type ChannelStats struct {
 
 func NewChannelStats(c *Channel, clients []ClientStats) ChannelStats {
 	return ChannelStats{
-		ChannelName:   c.name,
-		Depth:         c.Depth(),
-		BackendDepth:  c.backend.Depth(),
-		InFlightCount: len(c.inFlightMessages),
-		DeferredCount: len(c.deferredMessages),
-		MessageCount:  atomic.LoadUint64(&c.messageCount),
-		RequeueCount:  atomic.LoadUint64(&c.requeueCount),
-		TimeoutCount:  atomic.LoadUint64(&c.timeoutCount),
-		Clients:       clients,
-		Paused:        c.IsPaused(),
+		ChannelName:   c.name,                              // not a metric
+		Depth:         c.Depth(),                           // gauge
+		BackendDepth:  c.backend.Depth(),                   // ? gauge
+		InFlightCount: len(c.inFlightMessages),             // gauge
+		DeferredCount: len(c.deferredMessages),             // gauge
+		MessageCount:  atomic.LoadUint64(&c.messageCount),  // counter
+		RequeueCount:  atomic.LoadUint64(&c.requeueCount),  // counter
+		TimeoutCount:  atomic.LoadUint64(&c.timeoutCount),  // counter
+		Clients:       clients,                             // gauge
+		Paused:        c.IsPaused(),                        // gauge (integer: {0,1})
 
 		E2eProcessingLatency: c.e2eProcessingLatencyStream.Result(),
 	}
